@@ -1,0 +1,21 @@
+{
+  "name": "Rachel's Workouts",
+  "short_name": "Workouts",
+  "description": "Lunchtime kettlebell, bodyweight and sprint workouts with a timer, demos, a monthly plan and a log.",
+  "id": "./",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E9ECEF",
+  "theme_color": "#D63C76",
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Today's workout", "url": "./#today"},
+    {"name": "History", "url": "./#history"}
+  ]
+}
