@@ -854,15 +854,17 @@ function renderMe() {
     <div class="field"><span class="lbl">Body weight in</span>${chipGroup("units", [{id: "kg", label: "kg"}, {id: "st", label: "stone and pounds"}], S.units, false)}</div>
     <div class="field"><label for="name">Your name</label><input type="text" id="name" value="${esc(S.name)}" autocomplete="given-name"></div></div>`;
 
-  const canShare = (() => { try { return !!(navigator.canShare && navigator.canShare({files: [new File(["{}"], "t.json", {type: "application/json"})]})); } catch (e) { return false; } })();
+  const preview = !!window.RW_NO_SW;
+  const canShare = !preview && (() => { try { return !!(navigator.canShare && navigator.canShare({files: [new File(["{}"], "t.json", {type: "application/json"})]})); } catch (e) { return false; } })();
   h += `<h2 class="sec">Back up and restore</h2><div class="card">
     <p style="margin:0 0 12px;font-size:15px">Your history lives on this phone only. ${db.meta.lastBackup ? `Last backup: ${esc(niceDate(db.meta.lastBackup.slice(0, 10)))}.` : "You haven't made a backup yet."}</p>
     <div class="stack">
       ${canShare ? `<button type="button" class="btn wide" data-act="sharebackup">Send backup to Drive or email</button>` : ""}
-      <button type="button" class="btn ${canShare ? "ghost" : ""} wide" data-act="savebackup">Save backup file</button>
+      ${preview ? "" : `<button type="button" class="btn ${canShare ? "ghost" : ""} wide" data-act="savebackup">Save backup file</button>`}
       <button type="button" class="btn ghost wide" data-act="copybackup">Copy backup as text</button>
       <button type="button" class="btn ghost wide" data-act="restore">Restore from a backup</button>
     </div>
+    ${preview ? `<p class="muted" style="font-size:13.5px;margin:12px 0 0">This is the preview version. For file backups and offline use, install the app from its own web address.</p>` : ""}
     <p class="muted" style="font-size:13.5px;margin:12px 0 0">${plural(db.logs.length, "entry", "entries")} · ${plural(Object.keys(db.checkins).length, "check-in")} · ${plural(db.measures.length, "measurement")}</p></div>`;
   h += `<h2 class="sec">Install on your phone</h2><div class="card"><p style="margin:0;font-size:15px">In Chrome, tap the <strong>⋮</strong> menu, then <strong>Add to home screen</strong>, then <strong>Install</strong>. It opens like an app, full screen, and works offline.</p>
     ${installPrompt ? `<button type="button" class="btn accent small" style="margin-top:10px" data-act="install">Install now</button>` : ""}</div>`;
